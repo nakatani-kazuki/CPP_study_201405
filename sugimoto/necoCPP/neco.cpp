@@ -5,7 +5,7 @@ using namespace std;
 
 class Neco
 {
-//外部からはアクセスできない
+//外部からはアクセスできない2
 private:
 	string name;
 //外部からも使ったり表示させたりすることができる
