@@ -15,8 +15,8 @@ public:
 		name = s;
 	}
 	//void　は、返り値を必要としない関数。returnとかが含まれない
-	void naku(){
-		cout<< "にゃあ。俺様は" << name << "だ。" << endl;
+	void naku(string call){
+		cout<< call << "。俺様は" << name << "だ。" << endl;
 	}
 
 };
@@ -24,12 +24,15 @@ public:
 int main()
 {
 	string s;
-	cout << "どら猫を生成しあす。名前を入力してください。" << endl;
+	cout << "どら猫を生成します。名前を入力してください。" << endl;
 	cin >> s;
 	Neco dora(s);
 	cout << "あなたの名づけた猫がメモリ上に生成されました。" << endl;
+	string call;
+	cout << "では、この子の鳴き声を入力してください。" << endl;
+	cin >> call;
 	cout << "猫が鳴きます。" << endl;
-	dora.naku();
+	dora.naku(call);
 }
 
 
