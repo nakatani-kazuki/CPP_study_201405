@@ -6,36 +6,37 @@ class Cup {
     int water_amount;
 public:
     // 引数を取らないコンストラクタ
-    Cup();
-    void pour();
+    Cup(int);
+    void pour(int);
 };
 
 // 初期化処理
-Cup::Cup() {
-    water_amount = 9;
+Cup::Cup(int x) {
+    water_amount = x;
 }
 
 // 水を出す処理
-void Cup::pour() {
-    if (water_amount >= 2) {
-        water_amount -= 2;
+void Cup::pour(int x) {
+    if (water_amount >= x) {
+        water_amount -= x;
         cout<< "現在の水の量は" << water_amount << "です。" << endl;
     } else {
-        cout<< "こぼすほどの水ないよ" << endl;
+        cout<< "そんなに水ないよ" << endl;
         cout<< "あと" << water_amount << "しかない" << endl;
     }
 }
 
 int main() {
     // コップを生成
-    Cup cup_1;
+    int x;
+    cout << "コップを生成します。どれだけ水をいれるか入力してください。" << endl;
+    cin >> x;
+    Cup cup_1(x);
 
     cout << "コップcup_1をつくりました。" << endl;
-    cout << "cup_1から水を出します。" << endl;
-    cup_1.pour();
-    cup_1.pour();
-    cup_1.pour();
-    cup_1.pour();
-    cup_1.pour();
+    cout << "さあ、glassから水を出します。いくら出しますか。入力してください。" <<endl;
+    cin >> x; // 上のxを使いまわしている
+
+    cup_1.pour(x);
     cout<<"終了"<<endl;
 }
