@@ -8,9 +8,9 @@ using namespace std;
 
 class Hero
 {
+public:
 	//Heroはパワーという要素を持っています
 	int power;
-public:
 	//パワー100でヒーローを作ります
 	Hero() : power(100){}
 	void kougeki_suru(int n); 
@@ -19,7 +19,7 @@ public:
 
 void Hero::kougeki_suru(int n){
 	cout << "悪党め！やっつけてやる！！" << endl;
-	cout << "どか〜ん！！" << endl;
+	cout << "パワー" << n << "の攻撃！どか〜ん！！" << endl;
 	//攻撃に使ったパワーが減る
 	power -=n; 
 
@@ -36,6 +36,7 @@ void Hero::kougeki_suru(int n){
 //「攻撃される」関数。相手の攻撃の数字の分、HPを削る。
 void Hero::kougeki_sareru(int n){
 	cout << "あいたたたたたた！！" << endl;
+	cout << n << "のダメージを食らった！！" << endl;
 	power -= n;
 	if(power >= 0){
 		cout << "現在のパワーは" << power << "です。" << endl;
@@ -53,8 +54,8 @@ void Hero::kougeki_sareru(int n){
 
 class Daimao
 {
-	int power;
 public:
+	int power;
 	//パワー100で大魔王を作ります
 	Daimao() : power(100){}
 	void kougeki_suru(int n); 
@@ -63,7 +64,7 @@ public:
 
 void Daimao::kougeki_suru(int n){
 	cout << "フハハハ！！これでも喰らえ！！！！" << endl;
-	cout << "どか〜ん！！" << endl;
+	cout << "パワー" << n << "の攻撃！どか〜ん！！" << endl;
 	//攻撃に使ったパワーが減る
 	power -=n; 
 
@@ -82,7 +83,6 @@ void Daimao::kougeki_sareru(int n){
 		cout << "大魔王をやっつけました。" << endl;
 	}
 }
-
 
 // ここまで大魔王
 // ここから対決場所
@@ -121,43 +121,61 @@ Taiketu_basyo::Taiketu_basyo()
 //実際に対決をさせる関数
 //大魔王の攻撃はランダムで生成、勇者の攻撃はユーザに入力させてお互い殴らせる
 void Taiketu_basyo::taiketu(){
-//最初にユーザの攻撃
-	int iti, kougeki;
-	cout << "あなたの攻撃です。狙う位置を1~5の数値で入力してください。" << endl;
-	cin >> iti;
-	cout << "攻撃に使うパワー（100以下の数値）を入力してください" << endl;	
-	cin >> kougeki;
-	cout << endl;
-	//Heroのkougeki_suru関数に、今入力された攻撃パワーを渡して攻撃
-	//実際にはHeroのパワーがこの分減るだけ
-	you.kougeki_suru(kougeki);
-	//大魔王の場所とユーザが狙った場所が合っていたら大魔王のパワーが削れる
-	if(bu_no_basyo == iti){
-		//ユーザが入力した攻撃力の2倍のダメージを食らう
-		bu.kougeki_sareru(kougeki*2);
+
+	while( bu.power > 0 && you.power > 0)
+		{
+	//最初にユーザの攻撃
+		int iti, kougeki;
+		cout << "あなたの攻撃です。狙う位置を1~5の数値で入力してください。" << endl;
+		cin >> iti;
+		cout << "攻撃に使うパワー（100以下の数値）を入力してください" << endl;	
+		cin >> kougeki;
+		cout << endl;
+		//Heroのkougeki_suru関数に、今入力された攻撃パワーを渡して攻撃
+		//実際にはHeroのパワーがこの分減るだけ
+		you.kougeki_suru(kougeki);
+		//大魔王の場所とユーザが狙った場所が合っていたら大魔王のパワーが削れる
+		if(bu_no_basyo == iti){
+			//ユーザが入力した攻撃力の2倍のダメージを食らう
+			bu.kougeki_sareru(kougeki*2);
+		}
+		else{
+			cout << "ミス！大魔王は別の場所にいる！" << endl;	
+		}
+
+		//この時点でyouが死んでたらループを抜ける
+		if(bu.power <= 0 or you.power <= 0){
+			break;
+		}
+
+	//ここから大魔王の攻撃
+		cout << endl;
+		cout << "大魔王の攻撃！" << endl;	
+		cout << endl;
+		cin.sync(); //あとで
+		cin.get(); //あとで
+		//大魔王が狙う位置を1〜5のランダムで生成
+		iti = rand() %5+1; 
+		//大魔王の使うパワーを1~100のランダムで生成
+		kougeki = rand() %50+1;
+		//Daimaoのkougeki_suru関数に、今入力された攻撃パワーを渡して攻撃
+		//実際にはDaimaoのパワーがこの分減るだけ
+		bu.kougeki_suru(kougeki);
+		if(you_no_basyo == iti){
+			//攻撃力の2倍のダメージを食らう
+			you.kougeki_sareru(kougeki*2);
+		}
+		else{
+		cout << "ラッキー！大魔王の攻撃がはずれた！ \n" << endl;	
+		}
+	}
+
+	if(you.power >0)
+	{
+		cout << "おめでとう！あなたの勝利だ！！" << endl;	
 	}
 	else{
-	cout << "ミス！大魔王は別の場所にいる！" << endl;	
-	}
-//ここから大魔王の攻撃
-	cout << endl;
-	cout << "大魔王の攻撃！" << endl;	
-	cout << "＜＜エンターキーを押してください＞＞" << endl;	
-	cin.sync(); //あとで
-	cin.get(); //あとで
-	//大魔王が狙う位置を1〜5のランダムで生成
-	iti = rand() %5+1; 
-	//大魔王の使うパワーを1~100のランダムで生成
-	kougeki = rand() %100+1;
-	//Daimaoのkougeki_suru関数に、今入力された攻撃パワーを渡して攻撃
-	//実際にはDaimaoのパワーがこの分減るだけ
-	bu.kougeki_suru(kougeki);
-	if(you_no_basyo == iti){
-		//攻撃力の2倍のダメージを食らう
-		you.kougeki_sareru(kougeki*2);
-	}
-	else{
-	cout << "ラッキー！大魔王の攻撃がはずれた！" << endl;	
+		cout << "残念！ブウに負けてしまいました…" << endl;	
 	}
 }
 
