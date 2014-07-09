@@ -5,13 +5,12 @@ using namespace std;
 
 class Neco
 {
-//外部からはアクセスできない2
 private:
 	string name;
-//外部からも使ったり表示させたりすることができる
-public:
 	//体力
 	int hp;
+
+public:
 	//ビルドする。class名で同じ名前を定義しないといけないらしい
 	Neco(string s){
 		name = s;
@@ -32,7 +31,11 @@ public:
 		return hp;
 	}
 
+	int get_hp(){
+		return hp;
+	}
 };
+
 
 int main()
 {
@@ -49,13 +52,13 @@ int main()
 	cin >> call;
 	cout << "猫が鳴きます。" << endl;
 	current_hp = dora.naku(call);
-	cout << "現在の体力は" << current_hp <<"です。" << endl;	
+	cout << "現在の体力は" << current_hp <<"です。" << endl;
 	//ごはんをあげる。ごはんをあげると体力が増える。
 	cout << "では、この子にえさをあげる数を入力してください" << endl;
 	cin >> food;
 	cout << "えさをあげました。" << endl;
 	current_hp = dora.eat(food);
-	cout << "現在の体力は" << current_hp <<"です。" << endl;	
+	cout << "現在の体力は" << current_hp <<"です。" << endl;
 }
 
 
