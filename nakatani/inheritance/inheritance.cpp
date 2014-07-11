@@ -43,12 +43,12 @@ public:
 };
 
 
-
-
-
 // -----------------------------------------
 // main
 // -----------------------------------------
+int COMMAND_NAKU     = 1;
+int COMMAND_NENSHUU  = 2;
+int COMMAND_SHOUKYUU = 3;
 int main()
 {
     cout << "ただの猫をメモリ上に生成します。名前を決めて入力してください。" << endl;
@@ -77,74 +77,22 @@ int main()
         cout << "1:鳴かす  2:年収を表示  3:昇給  4:やめる" << endl;
         int ans;
         cin >> ans;
-        if(ans == 1){     //もし、ansが１なら、、、
-            //Nekoの関数NakuをSalaryNekoが使う。 
+        if (ans == COMMAND_NAKU) {
             s_neko.naku();
-            //Nekoのnaku()はSalaryNekoでも使えるのです。
         }
-        else if(ans == 2){ //そうじゃなくて、ansが２なら、、、
-            //SalaryNekoの関数get_nensyuをSalaryNekoが使う。 
+        else if (ans == COMMAND_NENSHUU) {
             cout << "年収は現在" << s_neko.get_nensyu() << "万円です。" << endl;
         }
-        else if(ans == 3){   //そうじゃなくて、ansが３なら、、、
-            // SalaryNekoの関数syoukyuをSalaryNekoが使う。 
+        else if (ans == COMMAND_SHOUKYUU) {
             s_neko.syoukyu();
             cout << "１万円昇給しました。" << endl;
         }
-        else{    //上のどれも成り立たない場合
-            //ユーザには4と入力すれば「やめる」になると表示しているが、
-            //ほかの数字も含めて上の1、2、3以外ならループを抜けるようにした。
-           //ループから抜けるにはbreak;
+        else {
+            // 入力が1、2、3以外ならループを抜ける
            break;
         }
-        //見やすさのための改行
         cout << endl;
     }
 
     cout << "おしまい" << endl;
 }
-
-
-
-
-// int main()
-// {
-//     cout << "サラリー猫をメモリ上に生成します。名前を決めて入力してください。" << endl;
-//     string temp;
-//     cin >> temp; 
-//     cout << "初任給を決めて入力してください。" << endl;
-//     cout << "（1万円単位で、半角整数を入力してください。）" << endl;
-//     int syoninkyu;
-//     cin >> syoninkyu;
-//     SalaryNeko dora(temp,syoninkyu);  //サラリー猫の生成
-//     //ループ。抜けるにはユーザが4か1、2、3以外の数字を入力すればよい。
-//     while(1){
-//         cout << "どうしますか？" << endl;
-//         cout << "1．鳴かす　2．年収を表示　3．昇給　4．やめる" << endl;
-//         int ans;
-//         cin >> ans;
-//         if(ans == 1){     //もし、ansが１なら、、、
-//             //Nekoの関数NakuをSalaryNekoが使う。 
-//             dora.naku();
-//             //Nekoのnaku()はSalaryNekoでも使えるのです。
-//         }
-//         else if(ans == 2){ //そうじゃなくて、ansが２なら、、、
-//             //SalaryNekoの関数get_nensyuをSalaryNekoが使う。 
-//             cout << "年収は現在" << dora.get_nensyu() << "です。" << endl;
-//         }
-//         else if(ans == 3){   //そうじゃなくて、ansが３なら、、、
-//             // SalaryNekoの関数syoukyuをSalaryNekoが使う。 
-//             dora.syoukyu();
-//             cout << "１万円昇給しました。" << endl;
-//         }
-//         else{    //上のどれも成り立たない場合
-//             //ユーザには4と入力すれば「やめる」になると表示しているが、
-//             //ほかの数字も含めて上の1、2、3以外ならループを抜けるようにした。
-//            //ループから抜けるにはbreak;
-//            break;
-//         }
-//         //見やすさのための改行
-//         cout << endl;
-//     }
-//     cout << "おしまい" << endl;
-// }
