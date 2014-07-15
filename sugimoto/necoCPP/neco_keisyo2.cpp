@@ -38,7 +38,8 @@ public:
 	SisanNeco (string s, string c, int x) : Neco(s,c) {
 		money = x;
 	}
-	int get_nensyu() const { return money * 2 / 100; }
+	int get_nensyu() const { return money * 2 / 200; }
+	int get_gesshuu() const { return (money * 2 / 100) / 12; }
 };
 
 int main()
