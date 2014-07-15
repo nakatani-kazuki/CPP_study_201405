@@ -39,7 +39,13 @@ public:
 		money = x;
 	}
 	int get_nensyu() const { return money * 2 / 100; }
+	int get_money() const { return money; }
+	void add_money();
 };
+
+void SisanNeco::add_money(){
+	money += 100;
+}
 
 int main()
 {
@@ -63,7 +69,7 @@ int main()
 	//ループ。抜けるには1、2以外の数字を入れる
 	while (1) { //基本無限ループにするやり方。抜けるコマンドを内側に設定しておく
 		cout << "どうしますか？" << endl;
-		cout << "1.鳴かせる 2.年収を表示 3.終了する" << endl;
+		cout << "1.鳴かせる 2.年収を表示 3.資産を増やす 4.資産を表示 5.終了する" << endl;
 		int ans;
 		cin >> ans;
 		//1を選んだらnakuコマンドで鳴かせる
@@ -73,6 +79,15 @@ int main()
 		// 2を選んだらget_nensyuで年収表示
 		else if (ans == 2) {
 			cout << "現在の年収は" << dora.get_nensyu() << "です。" << endl;
+		}
+		// 3を選んだらadd_moneyで資産を増やす
+		else if (ans == 3) {
+			dora.add_money();
+			cout << "資産が増えました！" << endl;
+		}
+		// 4を選んだらget_moneyで資産を表示
+		else if (ans == 4) {
+			cout << "現在の資産は" << dora.get_money() << "です。" << endl;
 		}
 		// 上記のどの数字でもなかったらループから抜ける
 		else {
