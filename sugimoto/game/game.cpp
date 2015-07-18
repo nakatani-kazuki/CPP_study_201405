@@ -14,18 +14,19 @@ public:
     //パワー100でヒーローを作ります
     Hero() : power(100){}
     void kougeki_suru(int n); 
-    void kougeki_sareru(int n);
+    void damage_normal(int n);
+    void damage_critical(int n);
 };
 
+//攻撃に使う分のパワーを自分のHPから削る。実際に相手にダメージを与えるのはdamage_XXXの関数。
 void Hero::kougeki_suru(int n){
     cout << "  『悪党め！やっつけてやる！！』  " << endl;
     cout << "パワー" << n << "の攻撃！どか〜ん！！" << endl;
     //攻撃に使ったパワーが減る
     power -=n; 
-
     //パワー0以上残っていればそのまま生存、0以下だと死ぬ
     if(power >= 0){
-        cout << "現在のパワーは" << power << "です。" << endl;
+        cout << endl;
     }
     else{
         cout << "  『しまった！パワーを使いすぎた…これまでか…』  " << endl;
@@ -33,15 +34,35 @@ void Hero::kougeki_suru(int n){
     }
 }
 
-//「攻撃される」関数。相手の攻撃の数字の分、HPを削る。
-void Hero::kougeki_sareru(int n){
-    cout << "  『あいたたたたたた！！』  " << endl;
-    cout << "痛恨の一撃！" << n << "のダメージを食らった！！" << endl;
-    power -= n;
+//ダメージを受ける関数。相手の攻撃の数字の分、HPを削る。
+void Hero::damage_normal(int n){
+    int damage = n;
+    cout << endl;
+    cout << "  『あいたたた…！！』  " << endl;
+    cout << "攻撃が命中！！" << damage << "のダメージを食らった！！" << endl;
+    power -= damage;
     if(power >= 0){
-        cout << "現在のパワーは" << power << "です。" << endl;
+        cout << endl;
     }
     else{
+        cout << endl;
+        cout <<  "  『くっ…こんなところで…』  " << endl;
+        cout << "ヒーローは死んでしまいました。" << endl;
+    }
+}
+
+//クリティカルヒットのダメージを受ける関数。相手の攻撃の数字の2倍、HPを削る。
+void Hero::damage_critical(int n){
+    int damage = n*2;
+    cout << endl;
+    cout << "  『いってええええええええええええええ！！』  " << endl;
+    cout << "痛恨の一撃！" << damage << "のダメージを食らった！！" << endl;
+    power -= damage;
+    if(power >= 0){
+        cout << endl;
+    }
+    else{
+        cout << endl;
         cout <<  "  『くっ…こんなところで…』  " << endl;
         cout << "ヒーローは死んでしまいました。" << endl;
     }
@@ -59,9 +80,11 @@ public:
     //パワー100で大魔王を作ります
     Daimao() : power(100){}
     void kougeki_suru(int n); 
-    void kougeki_sareru(int n);
+    void damage_normal(int n);
+    void damage_critical(int n);
 };
 
+//攻撃に使う分のパワーを自分のHPから削る。実際に相手にダメージを与えるのはdamage_XXXの関数。
 void Daimao::kougeki_suru(int n){
     cout << "  『フハハハ！！これでも喰らえ！！！！』  " << endl;
     cout << "パワー" << n << "の攻撃！どか〜ん！！" << endl;
@@ -75,17 +98,36 @@ void Daimao::kougeki_suru(int n){
     }
 }
 
-void Daimao::kougeki_sareru(int n){
-    cout << "  『ぐああああああ！！！』  " << endl;
-    power -= n;
+//ダメージを受ける関数。相手の攻撃の数字の分、HPを削る。
+void Daimao::damage_normal(int n){
+    int damage = n;
+    cout << endl;
+    cout << "  『こしゃくな！！！！』  " << endl;
+    cout << "ヒット！大魔王に" << damage << "のダメージ！！" << endl;
+    power -= damage;
     if(power < 0){
+        cout << endl;
+        cout << "  『ぐふっ…ばかな…』  " << endl;
+        cout << "大魔王をやっつけました。" << endl;
+    }
+}
+
+//クリティカルヒットのダメージを受ける関数。相手の攻撃の数字の2倍、HPを削る。
+void Daimao::damage_critical(int n){
+    int damage = n*2;
+    cout << endl;
+    cout << "  『ぐああああああああああ！！！』  " << endl;
+    cout << "かいしんの  いちげき！大魔王に" << damage << "のダメージ！！" << endl;
+    power -= damage;
+    if(power < 0){
+        cout << endl;
         cout << "  『ぐふっ…ばかな…』  " << endl;
         cout << "大魔王をやっつけました。" << endl;
     }
 }
 
 // ここまで大魔王
-// ここから対決場所
+// ここから対決
 
 class Taiketu_basyo
 {
@@ -142,24 +184,46 @@ void Taiketu_basyo::taiketu(){
         cout << endl;
         //大魔王の攻撃
         bu_attack();
+
+        //二人の場所と残りHHU（デバッグ用）
+        cout << "--------------"<<  endl;
+        cout << "HERO HP:"<< you.power << endl;
+        cout << "HERO area:"<< you_no_basyo << endl;
+        cout << "--------------"<<  endl;
+        cout << "BU HP:"<< bu.power << endl;
+        cout << "BU area:"<< bu_no_basyo << endl;
+        cout << "--------------"<<  endl;
     }
 
     //この時点で主人公が生きてたら勝利コメント、そうでなければ負けコメント
     if(you.power >0)
     {
+        cout << endl;  
+        cout << endl;  
+        cout << "========================================" << endl;  
         cout << "＼＼おめでとう！あなたの勝利だ！！//／" << endl;  
+        cout << "========================================" << endl;  
     }
     else{
+        cout << endl;  
+        cout << endl;  
+        cout << "========================================" << endl;  
         cout << "il||li残念！ブウに負けてしまいました…il||li" << endl; 
+        cout << "========================================" << endl;  
     }
 }
 
 
 //1ターン毎に隠れ場所を決める。ユーザは自身で入力した数値、大魔王はランダム抽選
 void Taiketu_basyo::set_hide_area(){
-    cout << "隠れ場所を決めましょう。！1~5のうち、隠れたい数字を入力してください" << endl;
+    cout << "隠れ場所を決めましょう。！1～5のうち、隠れたい数字を入力してください" << endl;
     //勇者の場所はユーザが入力
     cin >> you_no_basyo;
+    while(you_no_basyo < 1 || you_no_basyo > 5){
+        cout << "！！入力した数値が不正です！！" << endl;
+        cout << "隠れ場所を決めましょう。！1～5のうち、隠れたい数字を入力してください" << endl;
+        cin >> you_no_basyo;
+    }
     //大魔王の隠れ場所をランダムで決定
     //rand() %5 で、0~4までの乱数が取れる。＋1して1〜5にしとく
     bu_no_basyo = rand() %5 + 1;
@@ -168,22 +232,37 @@ void Taiketu_basyo::set_hide_area(){
 //勇者の攻撃
 void Taiketu_basyo::hero_attack(){
         int iti, kougeki;
-        cout << "あなたの攻撃です。狙う位置を1~5の数値で入力してください。" << endl;
+        cout << "あなたの攻撃です。狙う位置を1～5の数値で入力してください。" << endl;
         cin >> iti;
+        //入力した数が1以下または5以上のときは入力しなおし
+        while(iti < 1 || iti > 5){
+            cout << "！！入力した数値が不正です！！" << endl;
+            cout << "狙う位置を1～5の数値で入力してください。" << endl;
+            cin >> iti;
+        }
+        // a > 10 ? (b = a) : (b = -a);
         cout << "攻撃に使うパワー（100以下の数値）を入力してください" << endl;  
         cin >> kougeki;
-        cout << endl;
+        //入力した数が100以上のときは入力しなおし
+        while(kougeki > 100){
+            cout << "！！入力した数値が不正です！！" << endl;
+            cout << "攻撃に使うパワー（100以下の数値）を入力してください" << endl;
+            cin >> kougeki;
+        }
         //Heroのkougeki_suru関数に、今入力された攻撃パワーを渡して攻撃
         //実際にはHeroのパワーがこの分減るだけ
+        cout << endl;
         cout << "=============勇者の攻撃！=============" << endl; 
+        cout << endl;
         you.kougeki_suru(kougeki);
         //大魔王の場所とユーザが狙った場所が合っていたら大魔王のパワーが削れる
         if(bu_no_basyo == iti){
-            //ユーザが入力した攻撃力の2倍のダメージを食らう
-
-            bu.kougeki_sareru(kougeki*2);
-
-        cout << "ヒット！大魔王に" << kougeki*2 << "のダメージ！" << endl;  
+            //敵の場所にドンピシャだったらクリティカルヒット
+            bu.damage_critical(kougeki);
+        }
+        else if(bu_no_basyo == iti-1 || bu_no_basyo == iti+1){
+            //敵の場所に隣接する（+-1以内）だったらノーマルヒット
+            bu.damage_normal(kougeki);
         }
         else{
             cout << "ミス！大魔王は別の場所にいる！" << endl;  
@@ -200,11 +279,19 @@ void Taiketu_basyo::bu_attack(){
 
         //Daimaoのkougeki_suru関数に、今入力された攻撃パワーを渡して攻撃
         //実際にはDaimaoのパワーがこの分減るだけ
-        cout << "=============大魔王の攻撃！=============" << endl;    
+        cout << endl;
+        cout << "=============大魔王の攻撃！=============" << endl;   
+        cout << endl;
+        cin.sync(); //あとで
+        cin.get(); //あとで
         bu.kougeki_suru(kougeki);
         if(you_no_basyo == iti){
-            //攻撃力の2倍のダメージを食らう
-            you.kougeki_sareru(kougeki*2);
+            //自分の隠れた場所にドンピシャだったらクリティカルヒット
+            you.damage_critical(kougeki);
+        }
+       else if(you_no_basyo == iti-1 || you_no_basyo == iti+1){
+            //自分の隠れた場所に隣接する（+-1以内）だったらノーマルヒット
+            you.damage_normal(kougeki);
         }
         else{
         cout << "ラッキー！大魔王の攻撃がはずれた！ \n" << endl; 
